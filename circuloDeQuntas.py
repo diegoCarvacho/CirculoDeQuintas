@@ -12,6 +12,9 @@ from machine import Pin, I2C
 import mcp23017
 import ustruct
 
+LED = machine.Pin(25, machine.Pin.OUT)
+
+
 #CLASS
 class Circle:
     Inner = 1
@@ -25,8 +28,8 @@ class clsBoton:
         self.state = True
 
 # Crear Objeto Uart para poder enviar datos por el puerto serial (midi)
-uart = UART(0, 9600)
-uart.init(9600, bits=8, parity=None, stop=1)
+uart = UART(0, 31250)
+uart.init(31250, bits=8, parity=None, stop=1)
 
 # Crear I2C Bus
 i2c = I2C(0, sda=Pin(4), scl=Pin(5), freq = 200000)
@@ -91,9 +94,10 @@ def PrintCircleState(mcp, circle):
 # Funcion para enviar una nota por midi
 noteOn = 0x90
 noteOff = 0x80
-noteVelocity = 127
+noteVelocity = 0x7F
 
 def SendSingleNote(note, OnOff):
+    LED.toggle()
     if OnOff is False:
         uart.write(ustruct.pack("bbb", noteOn, note, noteVelocity))
     else:
@@ -105,8 +109,8 @@ def SendMajorChord(nota, OnOff):
     else:
         print("SendMajorChord: ", nota, "Off")
     SendSingleNote(nota, OnOff)
-    SendSingleNote(nota + 4, OnOff)
-    SendSingleNote(nota + 7, OnOff)
+    #SendSingleNote(nota + 4, OnOff)
+    #SendSingleNote(nota + 7, OnOff)
 
 def SendMinorChord(nota, OnOff):
     if OnOff is False:
