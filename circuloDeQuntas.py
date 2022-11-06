@@ -122,6 +122,7 @@ def SendMajorChord(nota, OnOff):
     SendSingleNote(nota, OnOff)
     SendSingleNote(nota + 4, OnOff)
     SendSingleNote(nota + 7, OnOff)
+    SendSingleNote(nota + 11, OnOff)
 
 def SendMinorChord(nota, OnOff):
     if OnOff is False:
@@ -131,6 +132,7 @@ def SendMinorChord(nota, OnOff):
     SendSingleNote(nota, OnOff)
     SendSingleNote(nota + 3, OnOff)
     SendSingleNote(nota + 7, OnOff)
+    SendSingleNote(nota + 10, OnOff)
 
 #PrintCircleState(mcpOutterCircle, outterCircleList)
 #PrintCircleState(mcpInnerCircle, innerCircleList)
@@ -149,7 +151,7 @@ while True:
             boton.state = not boton.state
             SendMajorChord(boton.note, boton.state)
 
-    time.sleep(0.03)
+    #time.sleep(0.03)
     print("...")
     #endTime = time.ticks_cpu() - startTime
     #print("endTime: ", endTime)
