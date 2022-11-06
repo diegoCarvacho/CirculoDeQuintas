@@ -50,34 +50,45 @@ for pinNum in outterPins:
 
 #C3 en midi es 48. Se usará como punto de referencia para todas las otras notas
 C3 = 48
+Db3 = 49
+D3 = 50
+Eb3 = 51
+E3 = 52
+F3 = 53
+Gb3 = 54
+G3 = 55
+Ab3 = 56
+A3 = 57
+Bb3 = 58
+B3 = 59
 
 # Crear los objetos de los Botones del circulo interior
 boton_in_0 = clsBoton(Circle.Inner, 0, C3)
-boton_in_1 = clsBoton(Circle.Inner, 1, C3+1)
-boton_in_2 = clsBoton(Circle.Inner, 2, C3+2)
-boton_in_3 = clsBoton(Circle.Inner, 3, C3+3)
-boton_in_4 = clsBoton(Circle.Inner, 4, C3+4)
-boton_in_5 = clsBoton(Circle.Inner, 5, C3+5)
-boton_in_6 = clsBoton(Circle.Inner, 6, C3+6)
-boton_in_7 = clsBoton(Circle.Inner, 7, C3+7)
-boton_in_8 = clsBoton(Circle.Inner, 8, C3+8)
-boton_in_9 = clsBoton(Circle.Inner, 9, C3+9)
-boton_in_10 = clsBoton(Circle.Inner, 10, C3+10)
-boton_in_11 = clsBoton(Circle.Inner, 11, C3+11)
+boton_in_1 = clsBoton(Circle.Inner, 1, G3)
+boton_in_2 = clsBoton(Circle.Inner, 2, D3)
+boton_in_3 = clsBoton(Circle.Inner, 3, A3)
+boton_in_4 = clsBoton(Circle.Inner, 4, E3)
+boton_in_5 = clsBoton(Circle.Inner, 5, B3)
+boton_in_6 = clsBoton(Circle.Inner, 6, Gb3)
+boton_in_7 = clsBoton(Circle.Inner, 7, Db3)
+boton_in_8 = clsBoton(Circle.Inner, 8, Ab3)
+boton_in_9 = clsBoton(Circle.Inner, 9, Eb3)
+boton_in_10 = clsBoton(Circle.Inner, 10, Bb3)
+boton_in_11 = clsBoton(Circle.Inner, 11, F3)
 
 # Crear los objetos de los Botones del circulo exterior
 boton_out_0 = clsBoton(Circle.Outter, 0, C3)
-boton_out_1 = clsBoton(Circle.Outter, 1, C3+1)
-boton_out_2 = clsBoton(Circle.Outter, 2, C3+2)
-boton_out_3 = clsBoton(Circle.Outter, 3, C3+3)
-boton_out_4 = clsBoton(Circle.Outter, 4, C3+4)
-boton_out_5 = clsBoton(Circle.Outter, 5, C3+5)
-boton_out_6 = clsBoton(Circle.Outter, 6, C3+6)
-boton_out_7 = clsBoton(Circle.Outter, 7, C3+7)
-boton_out_8 = clsBoton(Circle.Outter, 8, C3+8)
-boton_out_9 = clsBoton(Circle.Outter, 9, C3+9)
-boton_out_10 = clsBoton(Circle.Outter, 10, C3+10)
-boton_out_11 = clsBoton(Circle.Outter, 11, C3+11)
+boton_out_1 = clsBoton(Circle.Outter, 1, G3)
+boton_out_2 = clsBoton(Circle.Outter, 2, D3)
+boton_out_3 = clsBoton(Circle.Outter, 3, A3)
+boton_out_4 = clsBoton(Circle.Outter, 4, E3)
+boton_out_5 = clsBoton(Circle.Outter, 5, B3)
+boton_out_6 = clsBoton(Circle.Outter, 6, Gb3)
+boton_out_7 = clsBoton(Circle.Outter, 7, Db3)
+boton_out_8 = clsBoton(Circle.Outter, 8, Ab3)
+boton_out_9 = clsBoton(Circle.Outter, 9, Eb3)
+boton_out_10 = clsBoton(Circle.Outter, 10, Bb3)
+boton_out_11 = clsBoton(Circle.Outter, 11, F3)
 
 # Crear Lista que incluya todos los botones
 innerCircleList = [boton_in_0, boton_in_1, boton_in_2, boton_in_3, boton_in_4, boton_in_5, boton_in_6, boton_in_7, boton_in_8, boton_in_9, boton_in_10, boton_in_11]
