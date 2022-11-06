@@ -94,7 +94,7 @@ def PrintCircleState(mcp, circle):
 # Funcion para enviar una nota por midi
 noteOn = 0x90
 noteOff = 0x80
-noteVelocity = 0x7F
+noteVelocity = 0x46
 
 def SendSingleNote(note, OnOff):
     LED.toggle()
@@ -109,8 +109,8 @@ def SendMajorChord(nota, OnOff):
     else:
         print("SendMajorChord: ", nota, "Off")
     SendSingleNote(nota, OnOff)
-    #SendSingleNote(nota + 4, OnOff)
-    #SendSingleNote(nota + 7, OnOff)
+    SendSingleNote(nota + 4, OnOff)
+    SendSingleNote(nota + 7, OnOff)
 
 def SendMinorChord(nota, OnOff):
     if OnOff is False:
@@ -138,7 +138,7 @@ while True:
             boton.state = not boton.state
             SendMajorChord(boton.note, boton.state)
 
-    time.sleep(1)
+    time.sleep(0.03)
     print("...")
     #endTime = time.ticks_cpu() - startTime
     #print("endTime: ", endTime)
