@@ -63,18 +63,18 @@ Bb3 = 58
 B3 = 59
 
 # Crear los objetos de los Botones del circulo interior
-boton_in_0 = clsBoton(Circle.Inner, 0, C3)
-boton_in_1 = clsBoton(Circle.Inner, 1, G3)
-boton_in_2 = clsBoton(Circle.Inner, 2, D3)
-boton_in_3 = clsBoton(Circle.Inner, 3, A3)
-boton_in_4 = clsBoton(Circle.Inner, 4, E3)
-boton_in_5 = clsBoton(Circle.Inner, 5, B3)
-boton_in_6 = clsBoton(Circle.Inner, 6, Gb3)
-boton_in_7 = clsBoton(Circle.Inner, 7, Db3)
-boton_in_8 = clsBoton(Circle.Inner, 8, Ab3)
-boton_in_9 = clsBoton(Circle.Inner, 9, Eb3)
-boton_in_10 = clsBoton(Circle.Inner, 10, Bb3)
-boton_in_11 = clsBoton(Circle.Inner, 11, F3)
+boton_in_0 = clsBoton(Circle.Inner, 0, A3)
+boton_in_1 = clsBoton(Circle.Inner, 1, E3)
+boton_in_2 = clsBoton(Circle.Inner, 2, B3)
+boton_in_3 = clsBoton(Circle.Inner, 3, Gb3)
+boton_in_4 = clsBoton(Circle.Inner, 4, Db3)
+boton_in_5 = clsBoton(Circle.Inner, 5, Ab3)
+boton_in_6 = clsBoton(Circle.Inner, 6, Eb3)
+boton_in_7 = clsBoton(Circle.Inner, 7, Bb3)
+boton_in_8 = clsBoton(Circle.Inner, 8, F3)
+boton_in_9 = clsBoton(Circle.Inner, 9, C3)
+boton_in_10 = clsBoton(Circle.Inner, 10, G3)
+boton_in_11 = clsBoton(Circle.Inner, 11, D3)
 
 # Crear los objetos de los Botones del circulo exterior
 boton_out_0 = clsBoton(Circle.Outter, 0, C3)
@@ -122,7 +122,7 @@ def SendMajorChord(nota, OnOff):
     SendSingleNote(nota, OnOff)
     SendSingleNote(nota + 4, OnOff)
     SendSingleNote(nota + 7, OnOff)
-    SendSingleNote(nota + 11, OnOff)
+    #SendSingleNote(nota + 11, OnOff)
 
 def SendMinorChord(nota, OnOff):
     if OnOff is False:
@@ -132,7 +132,7 @@ def SendMinorChord(nota, OnOff):
     SendSingleNote(nota, OnOff)
     SendSingleNote(nota + 3, OnOff)
     SendSingleNote(nota + 7, OnOff)
-    SendSingleNote(nota + 10, OnOff)
+    #SendSingleNote(nota + 10, OnOff)
 
 #PrintCircleState(mcpOutterCircle, outterCircleList)
 #PrintCircleState(mcpInnerCircle, innerCircleList)
