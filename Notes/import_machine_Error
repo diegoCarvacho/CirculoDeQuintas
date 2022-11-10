@@ -1,0 +1,7 @@
+Luego de clonar el codigo de GitHub la librería machine no es reconocida (subrayada en rojo).
+
+Solución: 
+    1.- borrar el archivo oculto .picowgo y la carpeta oculta .vscode
+    2.- regenerar los archivos en el computador: View > Command-Palette > Pico-W-Go > Configure Proyect
+
+Luego de hacer esto la librería machine debería ser reconocida y no debería estar subrayada en rojo.
