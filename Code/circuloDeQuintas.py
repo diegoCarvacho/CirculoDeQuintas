@@ -14,7 +14,6 @@ import ustruct
 
 LED = machine.Pin(25, machine.Pin.OUT)
 
-
 #CLASS
 class Circle:
     Inner = 1
