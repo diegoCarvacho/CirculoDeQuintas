@@ -7,7 +7,7 @@ df = pd.read_csv('Documents/allMidiNotes.csv', delimiter=',')
 allNotes : list = df.values.tolist()
 allNotes.reverse()
 
-#print(allNotes)
+print(allNotes)
 
 with open('Documents/allMidiNotesReordered.csv', 'w') as f:
     write = csv.writer(f)  
