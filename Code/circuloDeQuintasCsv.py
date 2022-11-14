@@ -7,7 +7,9 @@ import mcp23017
 import ustruct
 import allMidiNotes
 from allMidiNotes import MidiNotesList
-import programMode_BotonVersion
+import ProgramMode_RotaryVersion
+from ProgramMode_RotaryVersion import GetProgramMode
+# import programMode_BotonVersion
 
 LED = machine.Pin(25, machine.Pin.OUT)
 
@@ -154,20 +156,27 @@ def SendChord_LatchMode(boton : clsBoton):
 #PrintCircleState(mcpOuterCircle, outerCircleList)
 #PrintCircleState(mcpInnerCircle, innerCircleList)
 
+GateMode = 0
+LatchMode = 1
+SelectedMode = 0
 def BotonStateChanged(boton : clsBoton):
     #check SelectedMode and act accordingly
+    SelectedMode = GetProgramMode()
     if SelectedMode is GateMode:
         SendChord_GateMode(boton)
+        # SendAllNotesOff()
     elif SelectedMode is LatchMode:
         SendChord_LatchMode(boton)
 
+# def ReadProgramMode():
+#     SelectedMode = GateMode
 
 #######################################################
 # Main loop
 #######################################################
 print("Running Circulo de Quintas. Selected Mode: ", SelectedMode, ". octava : ", octava, ". Circle offset : ", circleOffset)
 SendAllNotesOff()
-ReadProgramMode()
+# GetProgramMode()
 while True:
     # Outer Circle (Major chords)
     for boton in OuterCircleList:

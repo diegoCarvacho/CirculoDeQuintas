@@ -2,41 +2,59 @@
 #the class receives a value as parameter indicating which program mode should be selected.
 
 import machine
+import time
 from machine import Pin
 
-#define Pins
-#4 pins will be used for a binary representation of the  mode. 2^4 = 16 possible modes.
-modeSelectorPin0 = machine.Pin(5, machine.Pin.IN, pull = Pin.PULL_UP)
-modeSelectorPin1 = machine.Pin(6, machine.Pin.IN, pull = Pin.PULL_UP)
-modeSelectorPin2 = machine.Pin(7, machine.Pin.IN, pull = Pin.PULL_UP)
-modeSelectorPin3 = machine.Pin(8, machine.Pin.IN, pull = Pin.PULL_UP)
-
-#posible modes:
-#(mode : modeNumber, name)
-mode1 : tuple = (1, 'Gate')
-mode2 : tuple = (2, 'Latch')
-mode3 : tuple = (3, 'Clock')
-mode4 : tuple = (4, 'tbd')
-
-#function for reading state of the rotary switch
-def getProgramMode():
-
-    print('Getting Program Mode...')
+# class clsMode:
+#     mode0 : tuple = (0, 'Gate')
+#     mode1 : tuple = (1, 'Latch')
+#     mode2 : tuple = (2, 'Clock')
+#     mode4 : tuple = (3, 'tbd')
     
-    #read GPIOs
-    bit0 = int(modeSelectorPin0.value)
-    bit1 = int(modeSelectorPin1.value)
-    bit2 = int(modeSelectorPin2.value)
-    bit3 = int(modeSelectorPin3.value)
-    print('bit3 = ', bit3, 'bit2 = ', bit2, 'bit1 = ', bit1, 'bit0 = ', bit0)
+#     allModes = []
 
-    result : int = bit0 | bit1 << 1 | bit2 << 2 | bit3 << 3
-    print('result = ', result)
+#     def __init__(self, pinNumber: int, mode : tuple):
+#         self.pinNumber = pinNumber
+#         self.pin = Pin
+#         self.mode = mode
+#         self = machine.Pin(pinNumber, machine.Pin.IN, pull = Pin.PULL_UP)
+#         clsMode.allModes.append(self)
 
-    if result == 1:
-        return(mode1)
-    elif result == 2:
-        return(mode2)
-    elif result == 3:
-        return(mode3)
+# #declare posible modes
+# programmMode0 = clsMode (6, clsMode.mode0)
+# programmMode1 = clsMode (7, clsMode.mode1)
+# programmMode2 = clsMode (8, clsMode.mode2)
 
+# #default Mode = Mode1
+# selectedMode : clsMode = programmMode0
+
+
+#define modeSelectorPins
+selectorMode0 = machine.Pin(6, mode= Pin.IN, pull= Pin.PULL_DOWN)
+selectorMode1 = machine.Pin(7, mode= Pin.IN, pull= Pin.PULL_DOWN)
+selectorMode2 = machine.Pin(8, mode= Pin.IN, pull= Pin.PULL_DOWN)
+#function for reading state of the rotary switch
+def GetProgramMode():
+    if selectorMode0.value() == True:
+        print('selected mode is Gate')
+        return(0)
+    elif selectorMode1.value() == True:
+        print('selected mode is Latch')
+        return(1)
+    elif selectorMode2.value() == True:
+        print('selected mode is clock')
+        return(2)
+    else: 
+        print('no mode')
+        return(-1)
+
+
+
+# while True:
+#     # print('.')
+#     if selectorMode0.value():
+# 	    led.toggle()
+#         # time.sleep(0.3)
+# while(True):
+#     GetProgramMode()
+#     time.sleep(0.5)
