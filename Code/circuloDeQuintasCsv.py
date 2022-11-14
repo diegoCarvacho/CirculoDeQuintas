@@ -1,5 +1,4 @@
 #incluir librerias necesariar para el proyecto
-#import rp2
 import time
 import machine
 from machine import UART
@@ -8,16 +7,9 @@ import mcp23017
 import ustruct
 import allMidiNotes
 from allMidiNotes import MidiNotesList
+import ProgramMode
+
 LED = machine.Pin(25, machine.Pin.OUT)
-
-# import pandas as pd
-
-# df = pd.read_csv('Documents/allMidiNotesReordered.csv', delimiter=',')
-# allNotes : list = df.values.tolist()
-
-GateMode = 0
-LatchMode = 1
-SelectedMode : int = 1
 
 pressed = False
 notPressed = True

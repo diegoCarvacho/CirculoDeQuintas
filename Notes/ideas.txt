@@ -1,0 +1,3 @@
+al comenzar el rograma se llama a la funcion que revisa la posicion del rotary switch.
+Dependiendo de la posicion del switch la variable "selectedMode" recibe un valor. (GateMode, LatchMode, ClockMode...)    
+El programa principal al ser ejecutado va a ejecutar funciones basadas en el programa seleccionado.
