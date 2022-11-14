@@ -7,7 +7,7 @@ import mcp23017
 import ustruct
 import allMidiNotes
 from allMidiNotes import MidiNotesList
-import ProgramMode
+import programMode_BotonVersion
 
 LED = machine.Pin(25, machine.Pin.OUT)
 
@@ -167,6 +167,7 @@ def BotonStateChanged(boton : clsBoton):
 #######################################################
 print("Running Circulo de Quintas. Selected Mode: ", SelectedMode, ". octava : ", octava, ". Circle offset : ", circleOffset)
 SendAllNotesOff()
+ReadProgramMode()
 while True:
     # Outer Circle (Major chords)
     for boton in OuterCircleList:
