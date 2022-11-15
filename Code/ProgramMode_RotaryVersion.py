@@ -42,7 +42,7 @@ def GetProgramMode():
         print('selected mode is Latch')
         return(1)
     elif selectorMode2.value() == True:
-        print('selected mode is clock')
+        print('selected mode is Clock')
         return(2)
     else: 
         print('no mode')

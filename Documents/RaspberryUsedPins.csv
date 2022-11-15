@@ -1,0 +1,41 @@
+Board-Pin,Functionality,GoingTo
+1,UART0 TX,Midi Connector Pin #5
+2,nc,
+3,GND,Midi Connector Pin #2
+4,nc,
+5,nc,
+6,I2C SDA,Port Expander Bus SDA
+7,I2C SCL,Port Expander Bus SCL
+8,GND,Rotary Switch Common
+9,GP6,Rotary Switch Pin #1
+10,GP7,Rotary Switch Pin #2
+11,GP8,Rotary Switch Pin #3
+12,GP9,Rotary Switch Pin #4
+13,nc,
+14,GP10,Rotary Switch Pin #5
+15,GP11,Rotary Switch Pin #6
+16,GP12,Rotary Switch Pin #7
+17,GP13,Rotary Switch Pin #8
+18,nc,
+19,GP14,Rotary Switch Pin #9
+20,GP15,Rotary Switch Pin #10
+21,nc,
+22,nc,
+23,nc,
+24,nc,
+25,nc,
+26,nc,
+27,nc,
+28,nc,
+29,nc,
+30,nc,
+31,nc,
+32,nc,
+33,nc,
+34,nc,
+35,nc,
+36,3V3 (OUT),Midi Connector Pin #4 and Port Expander V+ (Vdd)
+37,nc,
+38,GND,Port Expander GND (Vss)
+39,nc,
+40,nc
