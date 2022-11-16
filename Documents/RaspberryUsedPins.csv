@@ -19,8 +19,8 @@ Board-Pin,Functionality,GoingTo
 18,nc,
 19,GP14,Rotary Switch Pin #9
 20,GP15,Rotary Switch Pin #10
-21,nc,
-22,nc,
+21,GP16,Rotary Switch Pin #11
+22,GP17,Rotary Switch Pin #12
 23,nc,
 24,nc,
 25,nc,

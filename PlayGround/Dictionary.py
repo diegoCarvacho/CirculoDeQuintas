@@ -25,22 +25,3 @@ for x, y in modesDictionary.items():
 
 
 exit()
-class clsMode:
-    mode0 : tuple = (0, 'Gate')
-    mode1 : tuple = (1, 'Latch')
-    mode2 : tuple = (2, 'Clock')
-    mode4 : tuple = (3, 'tbd')
-    
-    allModes = []
-
-    def __init__(self, pinNumber: int, mode : tuple):
-        self.pinNumber = pinNumber
-        self.pin = Pin
-        self.mode = mode
-        self = machine.Pin(pinNumber, machine.Pin.IN, pull = Pin.PULL_UP)
-        clsMode.allModes.append(self)
-
-#declare posible modes
-programmMode0 = clsMode (6, clsMode.mode0)
-programmMode1 = clsMode (7, clsMode.mode1)
-programmMode2 = clsMode (8, clsMode.mode2)
