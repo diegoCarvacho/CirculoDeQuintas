@@ -7,8 +7,8 @@ import mcp23017
 import ustruct
 import allMidiNotes
 from allMidiNotes import MidiNotesList
-import ProgramMode_RotaryVersion
-from ProgramMode_RotaryVersion import GetProgramMode
+import ProgramModes_RotaryVersion
+from ProgramModes_RotaryVersion import GetSelectedProgramMode
 # import programMode_BotonVersion
 
 LED = machine.Pin(25, machine.Pin.OUT)
@@ -16,7 +16,7 @@ LED = machine.Pin(25, machine.Pin.OUT)
 pressed = False
 notPressed = True
 octava : int = 4
-circleOffset : int = 3
+circleOffset : int = 3  # Set according to the orientation of the circle. 
 
 noteOn = 0x90
 noteOff = 0x80
@@ -36,7 +36,8 @@ class clsBoton:
 
 
 # Crear Objeto Uart para poder enviar datos por el puerto serial (midi)
-uart = UART(0, 31250)
+# 31250 is the Baudrate used for MIDI
+uart = UART(0, 31250)   
 uart.init(31250, bits=8, parity=None, stop=1)
 
 # Crear I2C Bus
@@ -102,7 +103,7 @@ def SendAllNotesOff():
 
 #Send a Note On/Off Command
 def SendSingleNote(note, OnOff):
-    LED.toggle()
+    #LED.toggle()
     if OnOff is pressed:
         uart.write(ustruct.pack("bbb", noteOn, note, noteVelocity))
     else:
@@ -110,7 +111,7 @@ def SendSingleNote(note, OnOff):
 
 #Send 3 Notes corresponding to a major chord            
 def SendMajorChord(boton : clsBoton):
-    #calculate note to send based on boton pressed, selected octave  and circle offset
+    #calculate note to send based on boton pressed, selected octave and circle offset
     rootNote = boton.scaleDegree + (12 * octava) + circleOffset
 
     if boton.state is pressed:

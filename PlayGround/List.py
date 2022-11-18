@@ -14,11 +14,11 @@ class clsMode:
 
 #declare posible modes
 mode0 = clsMode(6, 'Gated')
-mode0 = clsMode(7, 'Latched')
-mode0 = clsMode(8, 'Clock')
+mode1 = clsMode(7, 'Latched')
+mode2 = clsMode(8, 'Clock')
 # print(mode0.name)
 # print(mode0.pinNumber)
 
 print(len(clsMode.allModes))
-print(clsMode.allModes[1])
+print(clsMode.allModes[2])
 
