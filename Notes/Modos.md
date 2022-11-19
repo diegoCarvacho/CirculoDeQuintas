@@ -24,7 +24,7 @@ La desventaja de este modo es que se necesita reiniciar el uC para leer el modo 
 1. Sequenciador
 - cómo grabar?
 - cómo reproducir? se necesitan más botones!
-- seria interesante agregarle un trigger input para poder usar el bombo para ir pasando de un step al siguiente.
+- seria interesante agregarle un trigger input para poder usar el golbe de un bombo para ir pasando de un step al siguiente.
 
 
 

@@ -8,30 +8,29 @@ import ustruct
 import allMidiNotes
 from allMidiNotes import MidiNotesList
 import ProgramModes_RotaryVersion
-from ProgramModes_RotaryVersion import GetSelectedProgramMode
-# import programMode_BotonVersion
+from ProgramModes_RotaryVersion import GetSelectedProgramMode, Program
 
-LED = machine.Pin(25, machine.Pin.OUT)
+# LED = machine.Pin(25, machine.Pin.OUT)
 
-pressed = False
-notPressed = True
-octava : int = 4
-circleOffset : int = 3  # Set according to the orientation of the circle. 
 
-noteOn = 0x90
-noteOff = 0x80
-noteVelocity = 0x46
+# Classes
+class Midi:
+    octava : int = 4
+    noteOn = 0x90
+    noteOff = 0x80
+    noteVelocity = 0x46
 
-#CLASS
 class Circle:
-    Inner = 1
-    Outer = 2
+    inner = 1
+    outer = 2
+    offset : int = 3  # Set according to the orientation of the circle.
 
 class clsBoton:
-    def __init__(self, circle: int, pin: int, scaleDegree : int, state : bool = True):
+    pressed = False
+    notPressed = True
+    def __init__(self, circle: int, scale_degree : int, state : bool = True):
         self.circle = circle
-        self.pin = pin
-        self.scaleDegree = scaleDegree
+        self.scale_degree = scale_degree
         self.state = True
 
 
@@ -56,46 +55,34 @@ OuterPins = list(range(0,12))
 for pinNum in OuterPins:
     mcpOuterCircle.pin(pinNum, mode= 1, pullup= True)
 
+outerCircleList = []
+outerCircleList.append(clsBoton(Circle.inner, 0))
+outerCircleList.append(clsBoton(Circle.inner, 7))
+outerCircleList.append(clsBoton(Circle.inner, 2))
+outerCircleList.append(clsBoton(Circle.inner, 9))
+outerCircleList.append(clsBoton(Circle.inner, 4))
+outerCircleList.append(clsBoton(Circle.inner, 11))
+outerCircleList.append(clsBoton(Circle.inner, 6))
+outerCircleList.append(clsBoton(Circle.inner, 1))
+outerCircleList.append(clsBoton(Circle.inner, 8))
+outerCircleList.append(clsBoton(Circle.inner, 3))
+outerCircleList.append(clsBoton(Circle.inner, 10))
+outerCircleList.append(clsBoton(Circle.inner, 5))
 
-# Crear los objetos de los Botones del circulo exterior
-boton_out_0 = clsBoton(Circle.Outer, 0, 0)
-boton_out_1 = clsBoton(Circle.Outer, 1, 7)
-boton_out_2 = clsBoton(Circle.Outer, 2, 2)
-boton_out_3 = clsBoton(Circle.Outer, 3, 9)
-boton_out_4 = clsBoton(Circle.Outer, 4, 4)
-boton_out_5 = clsBoton(Circle.Outer, 5, 11)
-boton_out_6 = clsBoton(Circle.Outer, 6, 6)
-boton_out_7 = clsBoton(Circle.Outer, 7, 1)
-boton_out_8 = clsBoton(Circle.Outer, 8, 8)
-boton_out_9 = clsBoton(Circle.Outer, 9, 3)
-boton_out_10 = clsBoton(Circle.Outer, 10, 10)
-boton_out_11 = clsBoton(Circle.Outer, 11, 5)
+innerCircleList = []
+innerCircleList.append(clsBoton(Circle.outer, 9))
+innerCircleList.append(clsBoton(Circle.outer, 4))
+innerCircleList.append(clsBoton(Circle.outer, 11))
+innerCircleList.append(clsBoton(Circle.outer, 4))
+innerCircleList.append(clsBoton(Circle.outer, 1))
+innerCircleList.append(clsBoton(Circle.outer, 8))
+innerCircleList.append(clsBoton(Circle.outer, 3))
+innerCircleList.append(clsBoton(Circle.outer, 10))
+innerCircleList.append(clsBoton(Circle.outer, 5))
+innerCircleList.append(clsBoton(Circle.outer, 0))
+innerCircleList.append(clsBoton(Circle.outer, 7))
+innerCircleList.append(clsBoton(Circle.outer, 2))
 
-# Crear los objetos de los Botones del circulo interior
-boton_in_0 = clsBoton(Circle.Inner, 0, 9)
-boton_in_1 = clsBoton(Circle.Inner, 1, 4)
-boton_in_2 = clsBoton(Circle.Inner, 2, 11)
-boton_in_3 = clsBoton(Circle.Inner, 3, 6)
-boton_in_4 = clsBoton(Circle.Inner, 4, 1)
-boton_in_5 = clsBoton(Circle.Inner, 5, 8)
-boton_in_6 = clsBoton(Circle.Inner, 6, 3)
-boton_in_7 = clsBoton(Circle.Inner, 7, 10)
-boton_in_8 = clsBoton(Circle.Inner, 8, 5)
-boton_in_9 = clsBoton(Circle.Inner, 9, 1)
-boton_in_10 = clsBoton(Circle.Inner, 10, 7)
-boton_in_11 = clsBoton(Circle.Inner, 11, 2)
-
-# Crear lista que incluya todos los botones
-innerCircleList = [boton_in_0, boton_in_1, boton_in_2, boton_in_3, boton_in_4, boton_in_5, boton_in_6, boton_in_7, boton_in_8, boton_in_9, boton_in_10, boton_in_11]
-OuterCircleList = [boton_out_0, boton_out_1, boton_out_2, boton_out_3, boton_out_4, boton_out_5, boton_out_6, boton_out_7, boton_out_8, boton_out_9, boton_out_10, boton_out_11]
-
-# Function para impimir el estado de un circulo completo (12 Botones)
-def PrintCircleState(mcp, circle):
-    for boton in circle:
-        if mcp.pin(boton[1]) is False:
-            print(boton[0] , "\t is ON")
-        else:
-            print(boton[0], "\t is OFF")
 
 #Send a global Note Off Command
 def SendAllNotesOff():
@@ -104,17 +91,17 @@ def SendAllNotesOff():
 #Send a Note On/Off Command
 def SendSingleNote(note, OnOff):
     #LED.toggle()
-    if OnOff is pressed:
-        uart.write(ustruct.pack("bbb", noteOn, note, noteVelocity))
+    if OnOff is False:
+        uart.write(ustruct.pack("bbb", Midi.noteOn, note, Midi.noteVelocity))
     else:
-        uart.write(ustruct.pack('bbb', noteOff, note, noteVelocity))
+        uart.write(ustruct.pack('bbb', Midi.noteOff, note, Midi.noteVelocity))
 
 #Send 3 Notes corresponding to a major chord            
-def SendMajorChord(boton : clsBoton):
+def send_major_triad(boton : clsBoton):
     #calculate note to send based on boton pressed, selected octave and circle offset
-    rootNote = boton.scaleDegree + (12 * octava) + circleOffset
+    rootNote = boton.scale_degree + (12 * Midi.octava) + Circle.offset
 
-    if boton.state is pressed:
+    if boton.state is clsBoton.pressed:
         print(MidiNotesList[rootNote][1], "\tmajor ", "On")
     else:
         print(MidiNotesList[rootNote][1], "\tmajor ", "Off")
@@ -125,68 +112,68 @@ def SendMajorChord(boton : clsBoton):
     #SendSingleNote(nota + 11, OnOff)
 
 #Send 3 Notes corresponding to a minor chord            
-def SendMinorChord(boton : clsBoton):
+def send_minor_triad(boton : clsBoton):
     #calculate note to send based on boton pressed, selected octave  and circle offset
-    rootNote = boton.scaleDegree + (12 * octava) + circleOffset
+    rootNote = boton.scale_degree + (12 * Midi.octava) + Circle.offset
 
     if boton.state is False:
         print(MidiNotesList[rootNote][1], "\tminor ", "On")
     else:
         print(MidiNotesList[rootNote][1], "\tminor ", "Off")
-    
+
     SendSingleNote(rootNote, boton.state)
     SendSingleNote(rootNote + 3, boton.state)
     SendSingleNote(rootNote + 7, boton.state)
     #SendSingleNote(nota + 10, OnOff)
 
 
-def SendChord_GateMode(boton : clsBoton):
-    if boton.circle is Circle.Outer:
-        SendMajorChord(boton)
-    elif boton.circle is Circle.Inner:
-        SendMinorChord(boton)
+def send_chord_gate_mode(boton : clsBoton):
+    if boton.circle is Circle.outer:
+        send_major_triad(boton)
+    elif boton.circle is Circle.inner:
+        send_minor_triad(boton)
 
-def SendChord_LatchMode(boton : clsBoton):
-    if boton.state is pressed:
+def send_chord_hold_mode(boton : clsBoton):
+    if boton.state is clsBoton.pressed:
         SendAllNotesOff()
-        if boton.circle is Circle.Outer:
-            SendMajorChord(boton)
-        elif boton.circle is Circle.Inner:
-            SendMinorChord(boton)
+        if boton.circle is Circle.outer:
+            send_major_triad(boton)
+        elif boton.circle is Circle.inner:
+            send_minor_triad(boton)
 
-#PrintCircleState(mcpOuterCircle, outerCircleList)
-#PrintCircleState(mcpInnerCircle, innerCircleList)
-
-GateMode = 0
-LatchMode = 1
-SelectedMode = 0
-def BotonStateChanged(boton : clsBoton):
-    #check SelectedMode and act accordingly
-    SelectedMode = GetProgramMode()
-    if SelectedMode is GateMode:
-        SendChord_GateMode(boton)
-        # SendAllNotesOff()
-    elif SelectedMode is LatchMode:
-        SendChord_LatchMode(boton)
-
-# def ReadProgramMode():
-#     SelectedMode = GateMode
+def boton_state_changed(boton : clsBoton):
+    # check SelectedMode and act accordingly
+    match GetSelectedProgramMode:
+        case Program.gate:
+            send_chord_gate_mode(boton)
+        case Program.hold:
+            send_chord_hold_mode(boton)
+        # case Program.clockedGate:
+        # case Program.clockedHold:
 
 #######################################################
 # Main loop
 #######################################################
-print("Running Circulo de Quintas. Selected Mode: ", SelectedMode, ". octava : ", octava, ". Circle offset : ", circleOffset)
 SendAllNotesOff()
-# GetProgramMode()
+
+print("Running Circulo de Quintas. Selected Mode: ", GetSelectedProgramMode(), ". octava : ", Midi.octava, ". Circle offset : ", Circle.offset)
+
 while True:
     # Outer Circle (Major chords)
-    for boton in OuterCircleList:
-        if mcpOuterCircle.pin(boton.pin) != boton.state:
-            boton.state = not boton.state
-            BotonStateChanged(boton)
+    for i in range(len(outerCircleList)):
+        if mcpOuterCircle.pin(outerCircleList[i]) != outerCircleList[i].state:
+            outerCircleList[i].state = not outerCircleList[i].state
+            boton_state_changed(outerCircleList[i])
+
 
     # Inner Circle (Minor chords)
-    for boton in innerCircleList:
-        if mcpInnerCircle.pin(boton.pin) != boton.state:
-            boton.state = not boton.state
-            BotonStateChanged(boton)
+    for i in range(len(innerCircleList)):
+        if mcpInnerCircle.pin(innerCircleList[i]) != innerCircleList[i].state:
+            innerCircleList[i].state = not innerCircleList[i].state
+            boton_state_changed(innerCircleList[i])
+
+
+    # for boton in innerCircleList:
+    #     if mcpInnerCircle.pin(boton.pin) != boton.state:
+    #         boton.state = not boton.state
+    #         BotonStateChanged(boton)
