@@ -1,4 +1,4 @@
-MidiNotesList : list = [
+midi_notes_list : list = [
 [0, 'C-1', 8.18],
 [1, 'C#', 8.66],
 [2, 'D', 9.18],
