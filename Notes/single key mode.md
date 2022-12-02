@@ -1,5 +1,8 @@
 # Single Key Mode
 Un rotary switch de 12 posiciones es instalado al centro del circulo.
+
+![title](Images/circulo_color.png)
+
 Cada posicion del switch va a apuntar a uno de los 12 botones de cada circulo.
 La idea es implementar un modo de funcionamiento que cambie el circulo de quintas a un circulo cromatico en el que la posicion del Switch selecciona el primer grado de la escala seleccionada (mayor, menor, frigio, penatonica, etc).
 La escala se selecciona usando otro rotary switch.
@@ -32,8 +35,8 @@ La escala se selecciona usando otro rotary switch.
 
 ## Ideas
 ### qué pasa si se toca un boton que no corresponda a la escala seleccionada?
-si toco el boton del DO (boton 0) va sonar un acorde de DO mayor.
-si toco el boton del DO# (boton 1) va a sonar??
+Por ejemplo si toco el boton1 (C#) estando en la escala de Do Mayor.
+
 opciones:
 - nada
 - algun acorde que contenga C# en sus notas, y pudiese ser utilizado como alteracion en la escala de Do mayor
