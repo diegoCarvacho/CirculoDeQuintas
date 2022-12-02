@@ -7,7 +7,7 @@ from machine import Pin, I2C
 from mcp23017 import MCP23017
 import ustruct
 from all_midi_notes import midi_notes_list
-from rotary_switch_modes import get_selected, Mode
+from rotary_switch_modes import Mode
 
 # Global variables
 LED = machine.Pin(25, machine.Pin.OUT)
@@ -17,7 +17,7 @@ Can be set to False if the final version of the proyect has no screen to display
 
 # Classes
 class Circle:
-    ''' Class Circle just has some consatnts related to the circles'''
+    ''' Class Circle just has some constants related to the circles'''
     INNER = 1
     OUTER = 2
     OFFSET : int = 3  # Set according to the orientation of the circle.
@@ -96,33 +96,33 @@ for pin_number in inner_pins:
 
 
 
-(outer_circle) = []
-(outer_circle).append(Boton(Circle.INNER, mcp_inner_circle, 0, 0))
-(outer_circle).append(Boton(Circle.INNER, mcp_inner_circle, 1, 7))
-(outer_circle).append(Boton(Circle.INNER, mcp_inner_circle, 2, 2))
-(outer_circle).append(Boton(Circle.INNER, mcp_inner_circle, 3, 9))
-(outer_circle).append(Boton(Circle.INNER, mcp_inner_circle, 4, 4))
-(outer_circle).append(Boton(Circle.INNER, mcp_inner_circle, 5, 11))
-(outer_circle).append(Boton(Circle.INNER, mcp_inner_circle, 6, 6))
-(outer_circle).append(Boton(Circle.INNER, mcp_inner_circle, 7, 1))
-(outer_circle).append(Boton(Circle.INNER, mcp_inner_circle, 8, 8))
-(outer_circle).append(Boton(Circle.INNER, mcp_inner_circle, 9, 3))
-(outer_circle).append(Boton(Circle.INNER, mcp_inner_circle, 10, 10))
-(outer_circle).append(Boton(Circle.INNER, mcp_inner_circle, 11, 5))
+outer_circle_botons = []
+outer_circle_botons.append(Boton(Circle.INNER, mcp_inner_circle, 0, 0))
+outer_circle_botons.append(Boton(Circle.INNER, mcp_inner_circle, 1, 7))
+outer_circle_botons.append(Boton(Circle.INNER, mcp_inner_circle, 2, 2))
+outer_circle_botons.append(Boton(Circle.INNER, mcp_inner_circle, 3, 9))
+outer_circle_botons.append(Boton(Circle.INNER, mcp_inner_circle, 4, 4))
+outer_circle_botons.append(Boton(Circle.INNER, mcp_inner_circle, 5, 11))
+outer_circle_botons.append(Boton(Circle.INNER, mcp_inner_circle, 6, 6))
+outer_circle_botons.append(Boton(Circle.INNER, mcp_inner_circle, 7, 1))
+outer_circle_botons.append(Boton(Circle.INNER, mcp_inner_circle, 8, 8))
+outer_circle_botons.append(Boton(Circle.INNER, mcp_inner_circle, 9, 3))
+outer_circle_botons.append(Boton(Circle.INNER, mcp_inner_circle, 10, 10))
+outer_circle_botons.append(Boton(Circle.INNER, mcp_inner_circle, 11, 5))
 
-(inner_circle) = []
-(inner_circle).append(Boton(Circle.OUTER, mcp_outer_circle, 0, 9))
-(inner_circle).append(Boton(Circle.OUTER, mcp_outer_circle, 1, 4))
-(inner_circle).append(Boton(Circle.OUTER, mcp_outer_circle, 2, 11))
-(inner_circle).append(Boton(Circle.OUTER, mcp_outer_circle, 3, 6))
-(inner_circle).append(Boton(Circle.OUTER, mcp_outer_circle, 4, 1))
-(inner_circle).append(Boton(Circle.OUTER, mcp_outer_circle, 5, 8))
-(inner_circle).append(Boton(Circle.OUTER, mcp_outer_circle, 6, 3))
-(inner_circle).append(Boton(Circle.OUTER, mcp_outer_circle, 7, 10))
-(inner_circle).append(Boton(Circle.OUTER, mcp_outer_circle, 8, 5))
-(inner_circle).append(Boton(Circle.OUTER, mcp_outer_circle, 9, 0))
-(inner_circle).append(Boton(Circle.OUTER, mcp_outer_circle, 10, 7))
-(inner_circle).append(Boton(Circle.OUTER, mcp_outer_circle, 11, 2))
+inner_circle_botons = []
+inner_circle_botons.append(Boton(Circle.OUTER, mcp_outer_circle, 0, 9))
+inner_circle_botons.append(Boton(Circle.OUTER, mcp_outer_circle, 1, 4))
+inner_circle_botons.append(Boton(Circle.OUTER, mcp_outer_circle, 2, 11))
+inner_circle_botons.append(Boton(Circle.OUTER, mcp_outer_circle, 3, 6))
+inner_circle_botons.append(Boton(Circle.OUTER, mcp_outer_circle, 4, 1))
+inner_circle_botons.append(Boton(Circle.OUTER, mcp_outer_circle, 5, 8))
+inner_circle_botons.append(Boton(Circle.OUTER, mcp_outer_circle, 6, 3))
+inner_circle_botons.append(Boton(Circle.OUTER, mcp_outer_circle, 7, 10))
+inner_circle_botons.append(Boton(Circle.OUTER, mcp_outer_circle, 8, 5))
+inner_circle_botons.append(Boton(Circle.OUTER, mcp_outer_circle, 9, 0))
+inner_circle_botons.append(Boton(Circle.OUTER, mcp_outer_circle, 10, 7))
+inner_circle_botons.append(Boton(Circle.OUTER, mcp_outer_circle, 11, 2))
 
 
 def send_triad(boton : Boton):
@@ -152,7 +152,7 @@ def send_chord_hold_mode(boton : Boton):
 def send_chord(boton : Boton):
     '''if the state of a boton has changed (pressed or released)
     a function will be called depending to the selected program'''
-    match get_selected:
+    match Mode.get_selected():
         case Mode.gate:
             send_chord_gate_mode(boton)
         case Mode.hold:
@@ -167,16 +167,16 @@ def send_chord(boton : Boton):
 
 Midi.send_all_notes_off()
 
-print("Running Circulo de Quintas. Selected Mode: ", get_selected(),
+print("Running Circulo de Quintas. Selected Mode: ", Mode.get_selected(),
 ". octava : ", Midi.octave, ". circle offset : ", Circle.OFFSET)
 
 while True:
 
-    for boton in (outer_circle):
+    for boton in outer_circle_botons:
         if boton.state_has_changed() is True:
             send_chord(boton)
 
-    for boton in (inner_circle):
+    for boton in inner_circle_botons:
         if boton.state_has_changed() is True:
             send_chord(boton)
 
