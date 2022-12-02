@@ -1,7 +1,6 @@
 import machine
 from machine import Pin
 
-
 class Mode:
     '''this class defines the possible modes as integers.'''
     gate : int = 0
@@ -16,21 +15,37 @@ class Mode:
     def get_selected():
         '''reads the states of the GPIOs connected to the rotary and
         selects a defined program mode accordingly.'''
-        if rotary_switch_pin_0.value() is False:
+        if rotary_switch_pin_0.value() is 0:
             print('selected mode is Gate')
             return(Mode.gate)
-        if rotary_switch_pin_1.value() is False:
+        if rotary_switch_pin_1.value() is 0:
             print('selected mode is Hold')
             return(Mode.hold)
-        if rotary_switch_pin_2.value() is False:
+        if rotary_switch_pin_2.value() is 0:
             print('selected mode is Clocked Gate')
             return(Mode.clocked_gate)
-        if rotary_switch_pin_3.value() is False:
+        if rotary_switch_pin_3.value() is 0:
             print('selected mode is Clocked Hold')
             return(Mode.clocked_hold)
-        
-        print('mode not defined')
-        return(-1)
+        if rotary_switch_pin_4.value() is 0:
+            print('selected mode is 4')
+        if rotary_switch_pin_5.value() is 0:
+            print('selected mode is 5')
+        if rotary_switch_pin_6.value() is 0:
+            print('selected mode is 6')
+        if rotary_switch_pin_7.value() is 0:
+            print('selected mode is 7')
+        if rotary_switch_pin_8.value() is 0:
+            print('selected mode is 8')
+        if rotary_switch_pin_9.value() is 0:
+            print('selected mode is 9')
+        if rotary_switch_pin_10.value() is 0:
+            print('selected mode is 10')
+        if rotary_switch_pin_11.value() is 0:
+            print('selected mode is 11')
+        else:
+            print('mode not defined')
+        return(999)
 
 #define modeSelectorPins
 rotary_switch_pin_0 = machine.Pin(6, mode= Pin.IN, pull= Pin.PULL_UP)

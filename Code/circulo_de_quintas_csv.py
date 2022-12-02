@@ -7,7 +7,7 @@ from machine import Pin, I2C
 from mcp23017 import MCP23017
 import ustruct
 from all_midi_notes import midi_notes_list
-from rotary_switch_modes import Mode
+# from rotary_switch_modes import Mode
 
 # Global variables
 LED = machine.Pin(25, machine.Pin.OUT)
@@ -16,6 +16,52 @@ printer : bool = True
 Can be set to False if the final version of the proyect has no screen to display txt'''
 
 # Classes
+class Mode:
+    '''this class defines the possible modes as integers.'''
+    gate : int = 0
+    hold : int = 1
+    clocked_gate : int = 2
+    clocked_hold : int = 3
+
+
+
+    #function for reading state of the rotary switch
+    @staticmethod
+    def get_selected():
+        '''reads the states of the GPIOs connected to the rotary and
+        selects a defined program mode accordingly.'''
+        if rotary_switch_pin_0.value() is 0:
+            print('selected mode is Gate')
+            return(Mode.gate)
+        if rotary_switch_pin_1.value() is 0:
+            print('selected mode is Hold')
+            return(Mode.hold)
+        if rotary_switch_pin_2.value() is 0:
+            print('selected mode is Clocked Gate')
+            return(Mode.clocked_gate)
+        if rotary_switch_pin_3.value() is 0:
+            print('selected mode is Clocked Hold')
+            return(Mode.clocked_hold)
+        if rotary_switch_pin_4.value() is 0:
+            print('selected mode is 4')
+        if rotary_switch_pin_5.value() is 0:
+            print('selected mode is 5')
+        if rotary_switch_pin_6.value() is 0:
+            print('selected mode is 6')
+        if rotary_switch_pin_7.value() is 0:
+            print('selected mode is 7')
+        if rotary_switch_pin_8.value() is 0:
+            print('selected mode is 8')
+        if rotary_switch_pin_9.value() is 0:
+            print('selected mode is 9')
+        if rotary_switch_pin_10.value() is 0:
+            print('selected mode is 10')
+        if rotary_switch_pin_11.value() is 0:
+            print('selected mode is 11')
+        else:
+            print('mode not defined')
+        return(999)
+
 class Circle:
     ''' Class Circle just has some constants related to the circles'''
     INNER = 1
@@ -72,7 +118,6 @@ class Midi:
                 print('send midi note_on: ', midi_notes_list[note][1])
 
 
-
 # Crear Objeto Uart para poder enviar datos por el puerto serial (midi)
 # 31250 is the Baudrate used for MIDI
 uart = UART(0, 31250)   
@@ -93,7 +138,6 @@ mcp_inner_circle.init()
 inner_pins = list(range(0,12))
 for pin_number in inner_pins:
     mcp_inner_circle.pin(pin_number, mode= 1, pullup= True)
-
 
 
 outer_circle_botons = []
@@ -152,24 +196,41 @@ def send_chord_hold_mode(boton : Boton):
 def send_chord(boton : Boton):
     '''if the state of a boton has changed (pressed or released)
     a function will be called depending to the selected program'''
-    match Mode.get_selected():
-        case Mode.gate:
+    mode =  Mode.get_selected()
+    if mode is Mode.gate:
             send_chord_gate_mode(boton)
-        case Mode.hold:
+    else:
+        if mode is Mode.hold:
             send_chord_hold_mode(boton)
         # case Program.clockedGate:
         # case Program.clockedHold:
 
 
-#######################################################
-# Main loop
-#######################################################
+#define modeSelectorPins
+rotary_switch_pin_0 = machine.Pin(6, mode= Pin.IN, pull= Pin.PULL_UP)
+rotary_switch_pin_1 = machine.Pin(7, mode= Pin.IN, pull= Pin.PULL_UP)
+rotary_switch_pin_2 = machine.Pin(8, mode= Pin.IN, pull= Pin.PULL_UP)
+rotary_switch_pin_3 = machine.Pin(9, mode= Pin.IN, pull= Pin.PULL_UP)
+rotary_switch_pin_4 = machine.Pin(10, mode= Pin.IN, pull= Pin.PULL_UP)
+rotary_switch_pin_5 = machine.Pin(11, mode= Pin.IN, pull= Pin.PULL_UP)
+rotary_switch_pin_6 = machine.Pin(12, mode= Pin.IN, pull= Pin.PULL_UP)
+rotary_switch_pin_7 = machine.Pin(13, mode= Pin.IN, pull= Pin.PULL_UP)
+rotary_switch_pin_8 = machine.Pin(14, mode= Pin.IN, pull= Pin.PULL_UP)
+rotary_switch_pin_9 = machine.Pin(15, mode= Pin.IN, pull= Pin.PULL_UP)
+rotary_switch_pin_10 = machine.Pin(16, mode= Pin.IN, pull= Pin.PULL_UP)
+rotary_switch_pin_11 = machine.Pin(17, mode= Pin.IN, pull= Pin.PULL_UP)
 
+
+#######################################################
+# House cleaning
+#######################################################
 Midi.send_all_notes_off()
-
 print("Running Circulo de Quintas. Selected Mode: ", Mode.get_selected(),
 ". octava : ", Midi.octave, ". circle offset : ", Circle.OFFSET)
 
+#######################################################
+# Main loop
+#######################################################
 while True:
 
     for boton in outer_circle_botons:
