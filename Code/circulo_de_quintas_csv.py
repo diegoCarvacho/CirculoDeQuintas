@@ -66,7 +66,7 @@ class Circle:
     ''' Class Circle just has some constants related to the circles'''
     INNER = 1
     OUTER = 2
-    OFFSET : int = 3  # Set according to the orientation of the circle.
+    OFFSET : int = 9  # Set according to the orientation of the circle.
 
 class Boton:
     
@@ -88,7 +88,7 @@ class Boton:
 
 class Midi:
     ''' Class Midi has the variables related to midi'''
-    octave : int = 4
+    octave : int = 3
     '''refers to the octave used for the root not of the chord to be played'''
     note_on = 0x90
     '''byte value defined in midi protocol for sending a note on message'''
@@ -141,39 +141,40 @@ for pin_number in inner_pins:
 
 
 outer_circle_botons = []
-outer_circle_botons.append(Boton(Circle.INNER, mcp_inner_circle, 0, 0))
-outer_circle_botons.append(Boton(Circle.INNER, mcp_inner_circle, 1, 7))
-outer_circle_botons.append(Boton(Circle.INNER, mcp_inner_circle, 2, 2))
-outer_circle_botons.append(Boton(Circle.INNER, mcp_inner_circle, 3, 9))
-outer_circle_botons.append(Boton(Circle.INNER, mcp_inner_circle, 4, 4))
-outer_circle_botons.append(Boton(Circle.INNER, mcp_inner_circle, 5, 11))
-outer_circle_botons.append(Boton(Circle.INNER, mcp_inner_circle, 6, 6))
-outer_circle_botons.append(Boton(Circle.INNER, mcp_inner_circle, 7, 1))
-outer_circle_botons.append(Boton(Circle.INNER, mcp_inner_circle, 8, 8))
-outer_circle_botons.append(Boton(Circle.INNER, mcp_inner_circle, 9, 3))
-outer_circle_botons.append(Boton(Circle.INNER, mcp_inner_circle, 10, 10))
-outer_circle_botons.append(Boton(Circle.INNER, mcp_inner_circle, 11, 5))
+outer_circle_botons.append(Boton(Circle.OUTER, mcp_outer_circle, 0, 0))
+outer_circle_botons.append(Boton(Circle.OUTER, mcp_outer_circle, 1, 7))
+outer_circle_botons.append(Boton(Circle.OUTER, mcp_outer_circle, 2, 2))
+outer_circle_botons.append(Boton(Circle.OUTER, mcp_outer_circle, 3, 9))
+outer_circle_botons.append(Boton(Circle.OUTER, mcp_outer_circle, 4, 4))
+outer_circle_botons.append(Boton(Circle.OUTER, mcp_outer_circle, 5, 11))
+outer_circle_botons.append(Boton(Circle.OUTER, mcp_outer_circle, 6, 6))
+outer_circle_botons.append(Boton(Circle.OUTER, mcp_outer_circle, 7, 1))
+outer_circle_botons.append(Boton(Circle.OUTER, mcp_outer_circle, 8, 8))
+outer_circle_botons.append(Boton(Circle.OUTER, mcp_outer_circle, 9, 3))
+outer_circle_botons.append(Boton(Circle.OUTER, mcp_outer_circle, 10, 10))
+outer_circle_botons.append(Boton(Circle.OUTER, mcp_outer_circle, 11, 5))
 
 inner_circle_botons = []
-inner_circle_botons.append(Boton(Circle.OUTER, mcp_outer_circle, 0, 9))
-inner_circle_botons.append(Boton(Circle.OUTER, mcp_outer_circle, 1, 4))
-inner_circle_botons.append(Boton(Circle.OUTER, mcp_outer_circle, 2, 11))
-inner_circle_botons.append(Boton(Circle.OUTER, mcp_outer_circle, 3, 6))
-inner_circle_botons.append(Boton(Circle.OUTER, mcp_outer_circle, 4, 1))
-inner_circle_botons.append(Boton(Circle.OUTER, mcp_outer_circle, 5, 8))
-inner_circle_botons.append(Boton(Circle.OUTER, mcp_outer_circle, 6, 3))
-inner_circle_botons.append(Boton(Circle.OUTER, mcp_outer_circle, 7, 10))
-inner_circle_botons.append(Boton(Circle.OUTER, mcp_outer_circle, 8, 5))
-inner_circle_botons.append(Boton(Circle.OUTER, mcp_outer_circle, 9, 0))
-inner_circle_botons.append(Boton(Circle.OUTER, mcp_outer_circle, 10, 7))
-inner_circle_botons.append(Boton(Circle.OUTER, mcp_outer_circle, 11, 2))
+inner_circle_botons.append(Boton(Circle.INNER, mcp_inner_circle, 0, 9))
+inner_circle_botons.append(Boton(Circle.INNER, mcp_inner_circle, 1, 4))
+inner_circle_botons.append(Boton(Circle.INNER, mcp_inner_circle, 2, 11))
+inner_circle_botons.append(Boton(Circle.INNER, mcp_inner_circle, 3, 6))
+inner_circle_botons.append(Boton(Circle.INNER, mcp_inner_circle, 4, 1))
+inner_circle_botons.append(Boton(Circle.INNER, mcp_inner_circle, 5, 8))
+inner_circle_botons.append(Boton(Circle.INNER, mcp_inner_circle, 6, 3))
+inner_circle_botons.append(Boton(Circle.INNER, mcp_inner_circle, 7, 10))
+inner_circle_botons.append(Boton(Circle.INNER, mcp_inner_circle, 8, 5))
+inner_circle_botons.append(Boton(Circle.INNER, mcp_inner_circle, 9, 0))
+inner_circle_botons.append(Boton(Circle.INNER, mcp_inner_circle, 10, 7))
+inner_circle_botons.append(Boton(Circle.INNER, mcp_inner_circle, 11, 2))
 
 
 def send_triad(boton : Boton):
     '''sends 3 midi notes'''
 
     root_note = boton.scale_degree + (12 * Midi.octave) + Circle.OFFSET
-    
+    print("rootnote: ", root_note)
+    print("circle offset: ",Circle.OFFSET)
     Midi.send_single_note(root_note + 0, boton.state)       # send root note
     if boton.circle is Circle.INNER:                        
         Midi.send_single_note(root_note + 3, boton.state)   # send minor third
@@ -199,6 +200,10 @@ def send_chord(boton : Boton):
     mode =  Mode.get_selected()
     if mode is Mode.gate:
             send_chord_gate_mode(boton)
+            print("circle: ", boton.circle)
+            print("mcp_pin: ", boton.mcp_pin)
+            print("scale degree: ", boton.scale_degree)
+            print("circle: ", boton.circle)
     else:
         if mode is Mode.hold:
             send_chord_hold_mode(boton)
